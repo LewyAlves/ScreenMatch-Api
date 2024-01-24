@@ -1,5 +1,6 @@
 package br.com.alura.screenMatch;
 
+import br.com.alura.screenMatch.model.DadosEpisodio;
 import br.com.alura.screenMatch.model.DadosSerie;
 import br.com.alura.screenMatch.service.ConsumoApi;
 import br.com.alura.screenMatch.service.ConverteDados;
@@ -17,11 +18,12 @@ public class ScreenMatchApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		ConsumoApi api = new ConsumoApi();
-		var endereco = api.ObeterDados("http://www.omdbapi.com/?t=supernatural&apikey=ce0a4b22");
-		System.out.println(endereco);
+		var endereco = api.ObeterDados("http://www.omdbapi.com/?t=supernatural&season=4&episode=12&apikey=ce0a4b22");
 		ConverteDados conversor = new ConverteDados();
 		DadosSerie dados = conversor.obterDados(endereco, DadosSerie.class);
-		System.out.println(dados);
+		System.out.println("Serie: " + dados);
+		DadosEpisodio dados2 = conversor.obterDados(endereco, DadosEpisodio.class);
+		System.out.println("Episodio: " + dados2);
 	}
 
 }

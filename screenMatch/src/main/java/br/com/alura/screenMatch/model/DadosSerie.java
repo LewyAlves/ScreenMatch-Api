@@ -10,7 +10,7 @@ public record DadosSerie(
         @JsonAlias("Year")
         String anosDeProducao,
         @JsonAlias("totalSeasons")
-        Integer totalTemoradas,
+        Integer totalTemporadas,
         @JsonAlias("imdbRating")
         String avaliacoes
 ) {

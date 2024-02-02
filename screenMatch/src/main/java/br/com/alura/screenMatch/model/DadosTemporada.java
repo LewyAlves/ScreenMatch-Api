@@ -8,7 +8,7 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record DadosTemporada(
         @JsonAlias("Season")
-        String temporada,
+        Integer temporada,
         @JsonAlias("Episodes")
         List<DadosEpisodio> episodios
 ) {

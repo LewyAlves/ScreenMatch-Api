@@ -50,13 +50,40 @@ public class Principal {
                 .limit(5)
                 .forEach(System.out::println);
 
-        //apenas teste
-
         List<Episodio> episodios = temporadas.stream()
                 .flatMap(t -> t.episodios().stream()
                         .map(d -> new Episodio(t.temporada(), d))
                         .limit(5)).collect(Collectors.toList());
         episodios.forEach(System.out::println);
 
+        System.out.println("\n");
+
+        System.out.println("Você deseja ver os melhores episodios a partir de qual temporada?");
+        var temp = reader.nextInt();
+        reader.nextLine();
+        episodios.stream()
+                .filter(e -> e.getTemporada() != null && e.getTemporada() >= temp)
+                .forEach(e -> System.out.println(
+                        "Temporada: " + e.getTemporada() +
+                                ", Titulo: " + e.getTitulo() +
+                                ", Episodio: " + e.getNumero() +
+                                ", Lançado em: " + e.getDataLancamento()
+                ));
+
+
+//        System.out.println("Você deseja ver os melhores episodios a partir de qual data de lançamento? ");
+//        var ano = reader.nextInt();
+//        reader.nextLine();
+//
+//        LocalDate escolhaDoAno = LocalDate.of(ano, 1,1);
+//        DateTimeFormatter formatacaoDeData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+//
+//        episodios.stream()
+//                .filter(e -> e.getDataLancamento() != null && e.getDataLancamento().isAfter(escolhaDoAno))
+//                .forEach(e -> System.out.println(
+//                        "Temporada: " + e.getTemporada() +
+//                        ", Titulo: " + e.getTitulo() +
+//                        ", Lançado em: " + e.getDataLancamento().format(formatacaoDeData)
+//                        ));
     }
 }

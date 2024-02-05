@@ -54,6 +54,14 @@ public class Episodio {
         this.dataLancamento = dataLancamento;
     }
 
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
     @Override
     public String toString() {
         return "temporada=" + temporada +

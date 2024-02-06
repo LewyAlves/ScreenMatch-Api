@@ -7,10 +7,7 @@ import br.com.alura.screenMatch.model.Episodio;
 import br.com.alura.screenMatch.service.ConsumoApi;
 import br.com.alura.screenMatch.service.ConverteDados;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Principal {
@@ -43,12 +40,12 @@ public class Principal {
                 .flatMap(t -> t.episodios().stream())
                 .collect(Collectors.toList());
 
-        System.out.println("\n Top 5 episodios: ");
-        dadosEpisodios.stream()
-                .filter(e -> !e.episodio().equalsIgnoreCase("N/A"))
-                .sorted(Comparator.comparing(DadosEpisodio::avaliacao).reversed())
-                .limit(5)
-                .forEach(System.out::println);
+//        System.out.println("\n Top 5 episodios: ");
+//        dadosEpisodios.stream()
+//                .filter(e -> !e.episodio().equalsIgnoreCase("N/A"))
+//                .sorted(Comparator.comparing(DadosEpisodio::avaliacao).reversed())
+//                .limit(5)
+//                .forEach(System.out::println);
 
         List<Episodio> episodios = temporadas.stream()
                 .flatMap(t -> t.episodios().stream()
@@ -56,19 +53,33 @@ public class Principal {
                         .limit(5)).collect(Collectors.toList());
         episodios.forEach(System.out::println);
 
+        var trechoDoEp = reader.nextLine();
+
+        Optional<Episodio> epBuscado = episodios.stream()
+                .filter(e -> e.getTitulo().toUpperCase().contains(trechoDoEp.toUpperCase()))
+                .findFirst();
+
+        if (epBuscado.isPresent()){
+            System.out.println("Epsodio: " + epBuscado.get().getTitulo());
+            System.out.println("Temporada: " + epBuscado.get().getTemporada());
+        } else {
+            System.out.println("Não encontrados nenhum epsodio de " + busca + " com esse titulo!");
+        }
+
+
         System.out.println("\n");
 
-        System.out.println("Você deseja ver os melhores episodios a partir de qual temporada?");
-        var temp = reader.nextInt();
-        reader.nextLine();
-        episodios.stream()
-                .filter(e -> e.getTemporada() != null && e.getTemporada() >= temp)
-                .forEach(e -> System.out.println(
-                        "Temporada: " + e.getTemporada() +
-                                ", Titulo: " + e.getTitulo() +
-                                ", Episodio: " + e.getNumero() +
-                                ", Lançado em: " + e.getDataLancamento()
-                ));
+//        System.out.println("Você deseja ver os melhores episodios a partir de qual temporada?");
+//        var temp = reader.nextInt();
+//        reader.nextLine();
+//        episodios.stream()
+//                .filter(e -> e.getTemporada() != null && e.getTemporada() >= temp)
+//                .forEach(e -> System.out.println(
+//                        "Temporada: " + e.getTemporada() +
+//                                ", Titulo: " + e.getTitulo() +
+//                                ", Episodio: " + e.getNumero() +
+//                                ", Lançado em: " + e.getDataLancamento()
+//                ));
 
 
 //        System.out.println("Você deseja ver os melhores episodios a partir de qual data de lançamento? ");

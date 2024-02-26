@@ -1,10 +1,12 @@
 package br.com.alura.screenMatch.principal;
 
+import br.com.alura.screenMatch.Repositorio.SeriesRepository;
 import br.com.alura.screenMatch.model.*;
 import br.com.alura.screenMatch.service.ConsumoApi;
 import br.com.alura.screenMatch.service.ConverteDados;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 public class Principal {
@@ -13,6 +15,13 @@ public class Principal {
     ConverteDados conversor = new ConverteDados();
     private  final String ENDERECO = "http://www.omdbapi.com/?t=";
     private final String API_KEY = "&apikey=ce0a4b22";
+    private List<DadosSerie> dadosSeries = new ArrayList<>();
+
+    private SeriesRepository seriesRepository;
+
+    public Principal(SeriesRepository seriesRepository) {
+        this.seriesRepository = seriesRepository;
+    }
 
     public void menu() {
         var opcao = -1;
@@ -21,6 +30,7 @@ public class Principal {
             var menu = """
                 1 - Buscar séries
                 2 - Buscar episódios
+                3 - Listar series buscadas
                 
                 0 - Sair                                 
                 """;
@@ -36,6 +46,9 @@ public class Principal {
                 case 2:
                     buscarEpisodioPorSerie();
                     break;
+                case 3:
+                    listaSeries();
+                    break;
                 case 0:
                     System.out.println("Saindo...");
                     break;
@@ -47,6 +60,9 @@ public class Principal {
 
     private void buscarSerieWeb() {
         DadosSerie dados = getDadosSerie();
+        Serie serie = new Serie(dados);
+        seriesRepository.save(serie);
+        dadosSeries.add(dados);
         System.out.println(dados);
     }
 
@@ -68,5 +84,15 @@ public class Principal {
             temporadas.add(dadosTemporada);
         }
         temporadas.forEach(System.out::println);
+    }
+
+    private void listaSeries(){
+        List<Serie> series = new ArrayList<>();
+        series = dadosSeries.stream()
+                        .map(d -> new Serie(d))
+                                .collect(Collectors.toList());
+        series.stream()
+                .sorted(Comparator.comparing(Serie::getGenero))
+                .forEach(System.out::println);
     }
 }

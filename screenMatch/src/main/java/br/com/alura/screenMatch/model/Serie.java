@@ -11,6 +11,7 @@ import java.util.OptionalDouble;
 @Setter
 @Entity
 public class Serie {
+    public Serie(){}
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

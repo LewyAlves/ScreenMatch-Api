@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.OptionalDouble;
 
@@ -25,6 +27,8 @@ public class Serie {
     private String atores;
     private String poster;
     private String sinopse;
+    @OneToMany(mappedBy = "serie")
+    private List<Episodio> episodios = new ArrayList<>();
 
     public Serie(DadosSerie dados){
         this.titulo = dados.titulo();

@@ -27,7 +27,7 @@ public class Serie {
     private String atores;
     private String poster;
     private String sinopse;
-    @OneToMany(mappedBy = "serie")
+    @OneToMany(mappedBy = "serie", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Episodio> episodios = new ArrayList<>();
 
     public Serie(DadosSerie dados){
@@ -41,16 +41,23 @@ public class Serie {
         this.sinopse = dados.sinopse();
     }
 
+    public void setEpisodios(List<Episodio> episodios) {
+        episodios.forEach(e -> e.setSerie(this));
+        this.episodios = episodios;
+    }
+
     @Override
     public String toString() {
         return
-                "titulo='" + titulo + '\'' +
-                ", genero=" + genero +
-                ", anosDeProducao='" + anosDeProducao + '\'' +
-                ", totalTemporadas=" + totalTemporadas +
-                ", avaliacoes=" + avaliacoes +
-                ", atores='" + atores + '\'' +
-                ", poster='" + poster + '\'' +
-                ", sinopse='" + sinopse + '\'';
+                "titulo= '" + titulo + '\'' +
+                ", genero= " + genero +
+                ", anosDeProducao= '" + anosDeProducao + '\'' +
+                ", totalTemporadas= " + totalTemporadas +
+                ", avaliacoes= " + avaliacoes +
+                ", atores= '" + atores + '\'' +
+                ", poster= '" + poster + '\'' +
+                ", sinopse= '" + sinopse + '\'' +
+                ", episodios= '" + episodios + '\'';
+
     }
 }

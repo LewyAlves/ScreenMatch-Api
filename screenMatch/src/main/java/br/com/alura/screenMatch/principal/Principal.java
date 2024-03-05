@@ -98,6 +98,7 @@ public class Principal {
                             .map(e -> new Episodio(d.temporada(), e)))
                     .collect(Collectors.toList());
 
+            episodios.stream().forEach(System.out::println);
             serieEncontrada.setEpisodios(episodios);
             seriesRepository.save(serieEncontrada);
         } else {

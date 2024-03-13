@@ -35,6 +35,9 @@ public class Principal {
                 4 - Pesquisar por serie
                 5 - Pesquisa serie por ator
                 6 - Top 5
+                7 - Seleção por categoria 
+                8 - Pesquisa por temporadas
+                9 - Pesquisar epsodio
                 
                 0 - Sair                                 
                 """;
@@ -61,6 +64,16 @@ public class Principal {
                     break;
                 case 6:
                     topSeries();
+                    break;
+                case 7:
+                    pesquisaSeriePorCategoria();
+                    break;
+                case 8:
+                    pesquisarPorTemporadas();
+                    break;
+                case 9:
+                    pesquisaEpsodio();
+                    break;
                 case 0:
                     System.out.println("Saindo...");
                     break;
@@ -154,5 +167,37 @@ public class Principal {
         top5.forEach(s -> System.out.println(
                 "Serie: " + s.getTitulo() + ", Avaliação: " + s.getAvaliacoes()
         ));
+    }
+    private  void pesquisaSeriePorCategoria(){
+        System.out.println("Digite a categoria / genêro que deseja pesquisar");
+        var categoriaPesquisada = reader.nextLine();
+        Categoria categoria = Categoria.fromPortuguese(categoriaPesquisada);
+
+        List<Serie> serie = seriesRepository.findByGenero(categoria);
+        serie.forEach(System.out::println);
+    }
+    private void pesquisarPorTemporadas(){
+        System.out.println("Procura por serie com qual quantidade de temporadas?");
+        var temporada = reader.nextInt();
+        System.out.println("Deseja filtrar series a partir de qual nota? ");
+        var avaliacao = reader.nextDouble();
+
+        List<Serie> filtro = seriesRepository.SeriePorTemporada(temporada, avaliacao);
+        filtro.forEach(s -> System.out.println(
+                "Serie: " + s.getTitulo() + ", Temporadas: " + s.getTotalTemporadas() + ", Avaliação: " + s.getAvaliacoes()
+        ));
+    }
+
+    private void pesquisaEpsodio(){
+        System.out.println("Digite um trecho do epsodio que deseja encontrar ");
+        var trechoBuscado = reader.nextLine();
+
+        List<Episodio> episodiosEncontrados = seriesRepository.episodioPesquisadoPorTrecho(trechoBuscado);
+
+        episodiosEncontrados.forEach(e -> System.out.printf(
+                "Série: %s Temporada %s - Episódio %s - %s\n",
+                e.getSerie().getTitulo(), e.getTemporada(),
+                e.getNumero(), e.getTitulo())
+        );
     }
 }

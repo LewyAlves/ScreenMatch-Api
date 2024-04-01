@@ -88,17 +88,8 @@ public class Principal {
                 default:
                     System.out.println("Opção inválida");
             }
+
         }
-    }
-
-
-
-    private void buscarSerieWeb() {
-        DadosSerie dados = getDadosSerie();
-        Serie serie = new Serie(dados);
-        seriesRepository.save(serie);
-        dadosSeries.add(dados);
-        System.out.println(dados);
     }
 
     private DadosSerie getDadosSerie() {
@@ -107,6 +98,14 @@ public class Principal {
         var json = consumo.ObeterDados(ENDERECO + nomeSerie.replace(" ", "+") + API_KEY);
         DadosSerie dados = conversor.obterDados(json, DadosSerie.class);
         return dados;
+    }
+
+    private void buscarSerieWeb() {
+        DadosSerie dados = getDadosSerie();
+        Serie serie = new Serie(dados);
+        seriesRepository.save(serie);
+        dadosSeries.add(dados);
+        System.out.println(dados);
     }
 
     private void buscarEpisodioPorSerie() {

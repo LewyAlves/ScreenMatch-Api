@@ -17,7 +17,6 @@ import java.util.List;
 
 @SpringBootApplication
 public class ScreenMatchApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(ScreenMatchApplication.class, args);
 	}

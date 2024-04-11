@@ -22,6 +22,5 @@ public class ScreenMatchApplicationSemWeb implements CommandLineRunner {
 		Principal principal = new Principal(seriesRepository);
 		principal.menu();
 	}
-
 }
 */

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -34,7 +35,11 @@ public class Episodio {
             avaliacao = 0.0;
         }
         this.titulo = d.titulo();
-        dataLancamento = LocalDate.parse(d.dataLancamento());
+        try {
+            dataLancamento = LocalDate.parse(d.dataLancamento());
+        } catch (DateTimeException e){
+            dataLancamento = null;
+        }
     }
 
 
